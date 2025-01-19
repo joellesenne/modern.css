@@ -19,6 +19,9 @@
   "author": "Joël Lesenne <contact@joellesenne.dev>",
   "type": "commonjs",
   "main": "modern.css",
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   }
