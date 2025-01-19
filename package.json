@@ -1,0 +1,25 @@
+{
+  "name": "modern.css",
+  "version": "1.0.0",
+  "description": "A modern CSS for your project",
+  "keywords": [
+    "css",
+    "reset",
+    "framework"
+  ],
+  "homepage": "https://github.com/joellesenne/modern.css#readme",
+  "bugs": {
+    "url": "https://github.com/joellesenne/modern.css/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/joellesenne/modern.css.git"
+  },
+  "license": "MIT",
+  "author": "Joël Lesenne <contact@joellesenne.dev>",
+  "type": "commonjs",
+  "main": "modern.css",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
