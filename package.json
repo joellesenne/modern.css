@@ -1,11 +1,14 @@
 {
   "name": "@joellesenne/modern.css",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "private": false,
   "description": "A modern CSS for your project",
   "keywords": [
     "css",
     "reset",
+    "modern-css",
+    "modern-css-reset",
+    "modern-css-frameworks",
     "framework"
   ],
   "homepage": "https://github.com/joellesenne/modern.css#readme",
@@ -18,7 +21,7 @@
   },
   "license": "MIT",
   "author": "Joël Lesenne <contact@joellesenne.dev>",
-  "type": "commonjs",
+  "type": "module",
   "main": "modern.css",
   "publishConfig": {
     "access": "public"
