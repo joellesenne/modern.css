@@ -2,6 +2,8 @@
 
 A modern CSS for your project
 
+[Demo](https://codepen.io/joellesenne/full/NPKEeNq)
+
 ## Installation
 
 ```sh
