@@ -1,3 +1,4 @@
+@charset "utf-8";
 @layer theme {
     @property --surface-1 {
         syntax: '<color>';
@@ -72,7 +73,6 @@
         }
     }
 }
-
 @layer base {
     *, *::before, *::after {
         box-sizing: border-box;
@@ -96,9 +96,9 @@
         text-size-adjust: none;
     }
     body {
-        padding-top: 2rem;
+        padding-block-start: 2rem;
         min-height: 100vh;
-        font-size: 1.25rem;
+        font-size: calc(15px + 0.390625vw);
         line-height: 1.5;
         color: var(--light-surface);
         background-color: var(--dark-surface);
@@ -109,14 +109,14 @@
         -webkit-font-smoothing: antialiased;
     }
     address, area, article, aside, audio, blockquote, datalist, details, dl, div, fieldset, figure, form, input, iframe, img, meter, nav, ol, optgroup, option, output, p, pre, progress, ruby, section, table, textarea, ul, video {
-        margin-bottom: 1rem;
+        margin-block-end: 1rem;
     }
     p, h1, h2, h3, h4, h5, h6 {
         overflow-wrap: break-word;
         max-width: 65ch;
     }
     h1, h2, h3, h4, h5, h6 {
-        padding-top: .875rem;
+        padding-block-start: .875rem;
         line-height: 1;
         text-wrap: balance;
     }
@@ -125,7 +125,7 @@
         padding-bottom: 2px;
     }
     h4, h5, h6 {
-        margin-bottom: .3rem;
+        margin-block-end: .3rem;
     }
     h1 {font-size: 2.25rem;}
     h2 {font-size: 1.85rem;}
@@ -144,7 +144,7 @@
     }
     abbr:hover {cursor: help;}
     mark {
-        padding: 3px 6px;
+        padding-inline: 3px 6px;
         color: var(--surface-6);
         background: var(--surface-7);
     }
@@ -159,11 +159,26 @@
 @layer components {
     @layer blockquote {
         blockquote {
-            margin: 1rem 0;
+            position: relative;
+            margin-block: 1rem;
             padding: 1rem;
             color: var(--surface-1);
             background: var(--surface-7);
             border-left: 5px solid var(--surface-6);
+            &::before,
+            &::after {
+                content: '"';
+                position: absolute;
+                font-size: 1.8rem;
+            }
+            &::before {
+                top: 0;
+                left: 5px;
+            }
+            &::after {
+                bottom: -10px;
+                right: 5px;
+            }
         }
     }
     @layer hr {
@@ -173,7 +188,7 @@
     }
     @layer details {
         details {
-            margin: 1rem 0;
+            margin-block: 1rem;
             padding: 1rem;
             color: var(--surface-1);
             background: var(--surface-7);
@@ -185,13 +200,13 @@
     }
     @layer figure {
         figure {
-            margin: 1rem 0;
+            margin-block: 1rem;
             padding: 1rem;
             color: var(--surface-1);
             background: var(--surface-7);
         }
         figcaption {
-            margin-top: .5rem;
+            margin-block-start: .5rem;
             font-size: .875rem;
             text-align: center;
         }
@@ -200,15 +215,16 @@
         }
     }
     @layer list {
-        ol, ul {padding-left: 2rem;}
-        li {margin-top: .4rem;}
+        ol, ul {padding-inline-start: 2rem;}
+        li {margin-block-start: .4rem;}
         dt {font-weight: bold;}
         dd::before {content: '→ ';}
     }
     @layer table {
         table {
-            border-collapse: collapse;
             width: 100%;
+            text-align: start;
+            border-collapse: collapse;
             caption {
                 font-weight: bold;
                 margin-bottom: .5rem;
@@ -220,7 +236,7 @@
                 padding: .5rem;
                 vertical-align: top;
                 color: var(--surface-1);
-                text-align: start;
+
                 border: 1px solid var(--surface-6);
             }
             th {
@@ -238,16 +254,17 @@
             padding: 1rem;
         }
         legend {
-            padding: 0 .5rem;
+            padding-inline-end: .5rem;
             font-weight: bold;
         }
         label {
             display: block;
-            margin-bottom: .5rem;
+            margin-block-end: .5rem;
         }
         input, textarea, select, button {
-            margin-bottom: .5rem;
+            margin-block-end: .5rem;
             padding: 6px 12px;
+            field-sizing: content;
             font: inherit;
             letter-spacing: inherit;
             font-size: max(16px, 1em);
@@ -372,36 +389,42 @@
     }
 }
 @layer layout {
+    main {
+        container-type: inline-size;
+        margin-inline: auto;
+        max-width: clamp(320px, 90%, 1000px);
+    }
+    nav {
+        position: sticky;
+        margin: -2rem calc(50% - 50vw) 2rem;
+        padding: 1.5rem;
+        top: 0;
+        color: var(--surface-1);
+        background-color: var(--dark-surface);
+        box-shadow: rgba(50, 50, 93, 0.25) 0 13px 27px -5px, rgba(0, 0, 0, 0.3) 0 8px 16px -8px;
+        @container (width < 600px) {
+            position: relative;
+        }
+        a {
+            margin-block-end: .5rem;
+            padding: .5rem;
+            text-decoration: none;
+            color: var(--surface-6);
+            background: var(--surface-7);
+            border-radius: 4px;
+            &:hover {
+                background: var(--dark-link);
+            }
+        }
+    }
     header {
         margin: -2rem calc(50% - 50vw) 2rem;
-        border-bottom: 1px solid var(--surface-7);
         padding: 2rem calc(50vw - 50%);
+        border-bottom: 1px solid var(--surface-7);
         h1 {
             margin-bottom: 1.5rem;
             font-size: 3rem;
         }
-    }
-    section {
-        margin: 2rem 0;
-        > * {
-            text-box: trim-both cap alphabetic;
-        }
-        h2 {
-            margin-bottom: 1rem;
-        }
-    }
-    footer {
-        position: sticky;
-        bottom: 0;
-        padding: 2rem calc(30vw - 50%);
-        z-index: -100;
-        a {
-            text-decoration: none;
-        }
-    }
-    main {
-        margin: auto;
-        max-width: clamp(320px, 90%, 1000px);
     }
     article {
         margin: 2rem 0;
@@ -414,28 +437,28 @@
         background: var(--surface-7);
         border-left: 5px solid var(--surface-6);
     }
-    nav {
+    section {
+        margin: 2rem 0;
+        > * {
+            text-box: trim-both cap alphabetic;
+        }
+        h2 {
+            margin-block-end: 1rem;
+        }
+    }
+    footer {
         position: sticky;
-        margin: -2rem calc(50% - 50vw) 2rem;
-        top: 0;
-        padding: 1.5rem;
-        color: var(--surface-1);
-        background-color: var(--dark-surface);
-        box-shadow: rgba(50, 50, 93, 0.25) 0 13px 27px -5px, rgba(0, 0, 0, 0.3) 0 8px 16px -8px;
+        padding: 2rem calc(50vw - 50%);
+        bottom: 0;
+        z-index: -100;
+        @container (width < 600px) {
+            position: relative;
+        }
         a {
-            margin-bottom: .5rem;
-            padding: .5rem;
             text-decoration: none;
-            color: var(--surface-6);
-            background: var(--surface-7);
-            border-radius: 4px;
-            &:hover {
-                background: var(--dark-link);
-            }
         }
     }
 }
-
 @layer utilities {
     ::marker {line-height: 0;}
     ::selection {
@@ -447,16 +470,16 @@
 @layer demo {
     .theme-switch-wrapper {
         position: fixed;
+        padding: 1rem;
         top: 20px;
         right: 20px;
         margin: 1rem 0;
-        padding: 1rem;
         color: var(--surface-1);
         background: var(--surface-7);
         border: 1px solid var(--surface-6);
         border-radius: 4px;
         z-index: 100;
-        @media (max-width: 768px) {
+        @container (width < 600px) {
             display: none;
         }
     }
