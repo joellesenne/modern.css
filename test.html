@@ -3,12 +3,13 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>A modern CSS for your project</title>
+        <title>modern.css</title>
+        <meta name="description" content="A modern CSS for your project">
         <link rel="stylesheet" href="https://fonts.xz.style/serve/inter.css">
         <link rel="stylesheet" href="modern.css">
     </head>
     <body>
-        <main class="app">
+        <main>
             <div class="theme-switch-wrapper">
                 <h4>Dark Mode Setting:</h4>
                 <label><input name="color-scheme" type="radio" value="light dark" checked> System</label>
@@ -16,8 +17,8 @@
                 <label><input name="color-scheme" type="radio" value="dark"> Forced Dark</label>
             </div>
             <nav>
-                <a href="https://joellesenne.dev" target="_blank" rel="noopener noreferrer">site</a>
-                <a href="https://github.com/joellesenne/modern.css" target="_blank" rel="noopener noreferrer">gitHub</a>
+                <a href="https://joellesenne.dev" target="_blank" rel="noopener noreferrer">WebSite</a>
+                <a href="https://github.com/joellesenne" target="_blank" rel="noopener noreferrer">GitHub</a>
                 <a href="https://mastodon.social/@joellesenne" target="_blank" rel="noopener noreferrer">mastodon</a>
                 <a href="https://bsky.app/profile/joellesenne.bsky.social" target="_blank" rel="noopener noreferrer">bsky</a>
             </nav>
@@ -118,15 +119,18 @@
                 <section>
                     <h2>Code Example:</h2>
                     <pre>
-    &lt;!DOCTYPE html&gt;
-    &lt;html&gt;
-        &lt;head&gt;
-            &lt;title&gt;Hello World&lt;/title&gt;
-        &lt;/head&gt;
-        &lt;body&gt;
-            &lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit.&lt;/p&gt;
-        &lt;/body&gt;
-    &lt;/html&gt;</pre>
+&#x3C;!DOCTYPE html&#x3E;
+&#x3C;html lang="en"&#x3E;
+    &#x3C;head&#x3E;
+    &#x3C;title&#x3E;Hello World&#x3C;/title&#x3E;
+    &#x3C;/head&#x3E;
+    &#x3C;body&#x3E;
+        &#x3C;p&#x3E;
+            Lorem ipsum dolor sit amet,
+            consectetur adipiscing elit.
+        &#x3C;/p&#x3E;
+    &#x3C;/body&#x3E;
+&#x3C;/html&#x3E;</pre>
                     <h2>Kbd example:</h2>
                     <p>Press <kbd>Ctrl</kbd> + <kbd>C</kbd> to copy <code>this code</code> (Windows).</p>
                     <p>Press <kbd>Cmd</kbd> + <kbd>C</kbd> to copy <code>this code</code> (Mac OS).</p>
@@ -142,8 +146,8 @@
                         <caption>Ho-kago Tea Time</caption>
                         <thead>
                         <tr>
-                            <th>Name</th>
-                            <th>Instrument</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Instrument</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -179,15 +183,16 @@
                 <hr>
                 <section>
                     <h2>Form Example:</h2>
+                    <p>This is not a valid formula.</p>
                     <form onsubmit="handleSubmit()">
                         <fieldset>
                             <div>
                                 <label for="first_name">First name</label>
-                                <input type="text" id="first_name" name="first_name" placeholder="First name don't grow">
+                                <input type="text" id="first_name" name="first_name" required placeholder="First name don't grow"><span></span>
                             </div>
                             <div>
                                 <label for="last_name">Last name</label>
-                                <input type="text" id="last_name" name="last_name" placeholder="Last name don't grow">
+                                <input type="text" id="last_name" name="last_name" required placeholder="Last name don't grow"><span></span>
                             </div>
                             <div>
                                 <label>Gender</label>
@@ -203,7 +208,7 @@
                             </div>
                             <div>
                                 <label for="email">Email</label>
-                                <input type="email" id="email" name="email" placeholder="Email don't grow"  required>
+                                <input type="email" id="email" name="email" required placeholder="Email don't grow"><span></span>
                             </div>
                             <div>
                                 <label for="phone">Phone number</label>
@@ -211,7 +216,7 @@
                             </div>
                             <div>
                                 <label for="password">Password</label>
-                                <input type="password" id="password" placeholder="Password don't grow" name="password">
+                                <input type="password" id="password" required placeholder="Password don't grow" name="password"><span></span>
                             </div>
                             <div>
                                 <label for="country">Country</label>
@@ -233,13 +238,13 @@
                             <div>
                                 <label>
                                     <input type="checkbox" value="terms" required>
-                                    I agree to the <a href="#">terms and conditions</a>
+                                    I have read and agree with the <a href="#">terms and conditions</a>
                                 </label>
                             </div>
                             <div>
                                 <button type="submit">Sign up</button>
                                 <button type="reset">Reset form</button>
-                                <button disabled>Disabled</button>
+                                <button type="button" disabled>Disabled</button>
                             </div>
                         </fieldset>
                     </form>
@@ -248,21 +253,32 @@
                 <section>
                     <h2>Image Example:</h2>
                     <figure>
-                        <img src="https://static.joellesenne.dev/images/DSC01813-HDR.jpg" alt="Volkswagen coccinelle">
-                        <figcaption>Volkswagen coccinelle</figcaption>
+                        <img src="/media/male-hacker-with-glasses-working-on-a-supercompute.jpg" alt="Male hacker with glasses working on a supercompute">
+                        <figcaption>Prompt: Male hacker with glasses working on a supercompute</figcaption>
                     </figure>
                 </section>
             </article>
             <footer>
-                <p>© <a href="https://joellesenne.dev" target="_blank" rel="noopener noreferrer">Joël Lesenne</a></p>
+                <h5>All rights reserved © <span id="year"></span> - <a href="https://joellesenne.dev" target="_blank" rel="noopener noreferrer">Joël Lesenne</a></h5>
             </footer>
         </main>
+
     </body>
     <script>
-        function handleSubmit(event) {
+        const updateYear = () => {
+            const yearElement = document.getElementById('year');
+            const currentYear = new Date().getFullYear();
+            yearElement.textContent = currentYear <= 2025 ? `${currentYear}` : `2025-${currentYear}`;
+            return currentYear;
+        };
+
+        const handleSubmit = (event) => {
             event.preventDefault();
             const formData = new FormData(event.target);
-            alert([...formData.entries()]);
-        }
+            const entries = Array.from(formData.entries());
+            console.log(entries);
+        };
+
+        updateYear();
     </script>
 </html>

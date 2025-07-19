@@ -45,12 +45,7 @@ If you'd like the font [Inter](https://rsms.me/inter) as well (recommended), add
 
 👤 **Joël Lesenne**
 
-* Website : [https://joellesenne.dev](https://joellesenne.dev)
-* Mastodon : [@joellesenne](https://mastodon.social/@joellesenne)
-* Bluesky : [@joellesenne.bsky.social](https://bsky.app/profile/joellesenne.bsky.social)
-* Github : [@joellesenne](https://github.com/joellesenne)
-* Codepen : [@joellesenne](https://codepen.io/joellesenne)
-* LinkedIn : [@joellesenne](https://linkedin.com/in/joellesenne)
+ 
 
 ## 🤝 Contributing
 

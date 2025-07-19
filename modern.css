@@ -1,79 +1,70 @@
 @charset "utf-8";
+/* Define the theme with color and font variables */
 @layer theme {
-    @property --surface-1 {
-        syntax: '<color>';
-        inherits: false;
-        initial-value: #d3e0e0;
-    }
-    @property --surface-2 {
-        syntax: '<color>';
-        inherits: false;
-        initial-value: #2f324d;
-    }
-    @property --surface-3 {
-        syntax: '<color>';
-        inherits: false;
-        initial-value: #414138;
-    }
-    @property --surface-4 {
-        syntax: '<color>';
-        inherits: false;
-        initial-value: #008195;
-    }
-    @property --surface-5 {
-        syntax: '<color>';
-        inherits: false;
-        initial-value: #006a7a;
-    }
-    @property --surface-6 {
-        syntax: '<color>';
-        inherits: false;
-        initial-value: #77c0c0;
-    }
-    @property --surface-7 {
-        syntax: '<color>';
-        inherits: false;
-        initial-value: #233665;
-    }
+    /* Surface colors */
+    @property --surface-1 { syntax: '<color>'; inherits: false; initial-value: #f1f0fa; }
+    @property --surface-2 { syntax: '<color>'; inherits: false; initial-value: #00003E; }
+    @property --surface-3 { syntax: '<color>'; inherits: false; initial-value: #333300; }
+    @property --surface-4 { syntax: '<color>'; inherits: false; initial-value: #4b7686; }
+    @property --surface-5 { syntax: '<color>'; inherits: false; initial-value: #163c49; }
+    @property --surface-6 { syntax: '<color>'; inherits: false; initial-value: #7ec5da; }
+    @property --surface-7 { syntax: '<color>'; inherits: false; initial-value: #01017a; }
 
     :root {
+        /* Default color scheme and font settings */
         color-scheme: dark light;
         --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
         --font-mono: Consolas, monaco, 'Ubuntu Mono', 'Liberation Mono', 'Courier New', Courier, monospace;
         --base-weight: 400;
         --base-grade: 0;
 
-        /* Light theme */
+        /* Light and dark theme colors */
         --light-surface: light-dark(var(--surface-2), var(--surface-1));
         --dark-surface: light-dark(var(--surface-1), var(--surface-2));
         --light-link: light-dark(var(--surface-4), var(--surface-5));
         --dark-link: light-dark(var(--surface-5), var(--surface-4));
         --light-line: light-dark(var(--surface-6), var(--surface-7));
         --dark-line: light-dark(var(--surface-7), var(--surface-6));
+    }
 
-        &:has(input[name="color-scheme"][value="light dark"]:checked) {
-            color-scheme: light dark;
-        }
-        &:has(input[name="color-scheme"][value="light"]:checked) {
-            color-scheme: light;
-        }
-        &:has(input[name="color-scheme"][value="dark"]:checked) {
-            color-scheme: dark;
-        }
-        @supports (font-variation-settings: normal) {
+    /* Media queries for color scheme preferences */
+    :root:has(input[name="color-scheme"][value="light dark"]:checked) {
+        color-scheme: light dark;
+    }
+    :root:has(input[name="color-scheme"][value="light"]:checked) {
+        color-scheme: light;
+    }
+    :root:has(input[name="color-scheme"][value="dark"]:checked) {
+        color-scheme: dark;
+    }
+
+    /* Font variation settings for Inter font */
+    @supports (font-variation-settings: normal) {
+        html {
             font-family: InterVariable, sans-serif;
-            font-variation-settings:
-                    "wght" var(--base-weight),
-                    "GRAD" var(--base-grade)
-        ;
+            font-variation-settings: 'wght' var(--base-weight), 'GRAD' var(--base-grade);
+        }
 
-            @media (prefers-contrast: more)     { --base-weight: 700 }
-            @media (prefers-contrast: less)     { --base-weight: 200 }
-            @media (prefers-color-scheme: dark) { --base-grade: -25 }
+        /* Media queries for contrast preferences */
+        @media (prefers-contrast: more) {
+            :root { --base-weight: 700
+            }
+        }
+        @media (prefers-contrast: less) {
+            :root { --base-weight: 200
+            }
+        }
+        @media (prefers-color-scheme: dark) {
+            :root { --base-grade: -25
+            }
+            
         }
     }
 }
-@layer base {
+
+/* Reset default browser styles */
+@layer reset {
+    /* Box model, margins, padding, borders, transitions */
     *, *::before, *::after {
         box-sizing: border-box;
         margin: 0;
@@ -81,6 +72,8 @@
         border: 0;
         transition: .1s cubic-bezier(.1,0,.9,1);
         transition-property: accent-color, background-color, color;
+
+        /* Reduced motion for accessibility */
         @media (prefers-reduced-motion) {
             animation-duration: 0s !important;
             transition: none !important;
@@ -88,17 +81,24 @@
 
         }
     }
+}
+
+/* Base styles for the webpage */
+@layer base {
     html {
+        /* Font family and system font settings */
         font-family: var(--font-sans), sans-serif;
         font-feature-settings: 'liga' 1, 'calt' 1;
-        -moz-text-size-adjust: none;
-        -webkit-text-size-adjust: none;
-        text-size-adjust: none;
+        -moz-text-size-adjust: 100%;
+        -webkit-text-size-adjust: 100%;
+        text-size-adjust: 100%;
+        -webkit-tap-highlight-color: transparent;
     }
+
     body {
         padding-block-start: 2rem;
         min-height: 100vh;
-        font-size: calc(15px + 0.390625vw);
+        font-size: clamp(1rem, 2.5vw, 1.5rem);
         line-height: 1.5;
         color: var(--light-surface);
         background-color: var(--dark-surface);
@@ -108,120 +108,289 @@
         overflow-wrap: break-word;
         -webkit-font-smoothing: antialiased;
     }
+
+    /* Global styles for headings, paragraphs, and links */
     address, area, article, aside, audio, blockquote, datalist, details, dl, div, fieldset, figure, form, input, iframe, img, meter, nav, ol, optgroup, option, output, p, pre, progress, ruby, section, table, textarea, ul, video {
         margin-block-end: 1rem;
     }
+
     p, h1, h2, h3, h4, h5, h6 {
         overflow-wrap: break-word;
         max-width: 65ch;
     }
+
     h1, h2, h3, h4, h5, h6 {
         padding-block-start: .875rem;
         line-height: 1;
         text-wrap: balance;
     }
+
     h1, h2, h3 {
         margin-bottom: 8px;
         padding-bottom: 2px;
     }
+
     h4, h5, h6 {
         margin-block-end: .3rem;
     }
-    h1 {font-size: 2.25rem;}
-    h2 {font-size: 1.85rem;}
-    h3 {font-size: 1.55rem;}
-    h4 {font-size: 1.25rem;}
-    h5 {font-size: 1rem;}
-    h6 {font-size: .875rem;}
+
+    h1 {font-size: clamp(1.85rem, 2.5vw, 2.25rem);}
+    h2 {font-size: clamp(1.55rem, 2.5vw, 1.85rem);}
+    h3 {font-size: clamp(1.25rem, 2.5vw, 1.55rem);}
+    h4 {font-size: clamp(1rem, 2.5vw, 1.25rem);}
+    h5 {font-size: clamp(.875rem, 2.5vw, 1rem);}
+    h6 {font-size: clamp(.855rem, 2.5vw, .875rem);}
+
     a {
         text-underline-offset: 0.15em;
-        text-decoration-thickness: max(1px, 0.0625rem);
+        text-decoration-line: underline;
+        text-decoration-style: wavy;
+        text-decoration-color: var(--light-link);
+        text-decoration-thickness: max(2.5px, 0.0625rem);
+        text-decoration-skip-ink: auto;
         color: var(--dark-link);
-        transition: color 0.4s, background-color;
+        transition: all 0.4s, background-color;
+
+        /* Hover state for links */
         &:hover {
             color: var(--light-link);
+            text-decoration-color: var(--dark-link);
         }
     }
-    abbr:hover {cursor: help;}
+
+    abbr {
+        &:where([title]) {text-decoration: underline dotted;}
+        &:hover {cursor: help;}
+    }
+
     mark {
         padding-inline: 3px 6px;
         color: var(--surface-6);
         background: var(--surface-7);
     }
+        /* vertical-align: middle; */
     img, picture, video, canvas, svg {
+        /* Display, max-width, height, and vertical alignment styles */
         display: block;
         max-width: 100%;
         height: auto;
-        vertical-align: middle;
     }
+
     #root, #__next {isolation: isolate;}
 }
+
+/* Layout section: defines the structure and arrangement of elements on the page */
+@layer layout {
+    /* Main content area */
+    main {
+        /* Center the content horizontally and set max-width */
+        container-type: inline-size;
+        margin-inline: auto;
+        max-width: clamp(320px, 90%, 1000px);
+    }
+
+    /* Navigation bar */
+    nav {
+        /* Flexbox layout, sticky positioning, and box shadow */
+        display: flex;
+        justify-content: start;
+        gap: 1rem;
+        position: sticky;
+        margin: -2rem calc(50% - 50vw) 2rem;
+        padding: 1.5rem;
+        top: 0;
+        color: var(--surface-1);
+        background-color: var(--dark-surface);
+        box-shadow: rgba(50, 50, 93, 0.25) 0 13px 27px -5px, rgba(0, 0, 0, 0.3) 0 8px 16px -8px;
+
+        /* Container query for smaller screens */
+        @container (width < 600px) {
+            flex-wrap: nowrap;
+            position: relative;
+        }
+
+        /* Link styles */
+        a {
+            padding: .5rem;
+            text-decoration: none;
+            color: var(--surface-6);
+            background: var(--surface-7);
+            border-radius: 4px;
+
+            /* Hover state for links */
+            &:hover {
+                background: var(--surface-5);
+            }
+        }
+    }
+
+    /* Header section */
+    header {
+        /* Positioning and border styles */
+        margin: -2rem calc(50% - 50vw) 2rem;
+        padding: 2rem calc(50vw - 50%);
+        border-bottom: 1px solid var(--surface-7);
+
+        /* Heading styles */
+        h1 {
+            margin-bottom: 1.5rem;
+            font-size: 3rem;
+        }
+    }
+
+    /* Article, aside, and section elements */
+    article, aside, section {
+        /* Margin styles for spacing between elements */
+        margin: 2rem 0;
+        text-align: justify;
+    }
+    
+    aside {
+        /* Padding, color, background, and border styles for aside elements */
+        padding: 1rem;
+        color: var(--surface-1);
+        text-box: trim-both cap alphabetic;
+        border-left: 5px solid var(--surface-6);
+    }
+
+    section {
+        /* Text alignment and box-sizing for child elements */
+        > * {
+            text-box: trim-both cap alphabetic;
+        }
+
+        h2 {
+            /* Margin styles for h2 headings */
+            margin-block-end: 1rem;
+        }
+    }
+
+    /* Footer section */
+    footer {
+        /* Padding, positioning, width, text alignment, and color styles */
+        padding: 2rem calc(50vw - 50%);
+        bottom: 0;
+        width: 100%;
+        text-align: center;
+        color: var(--surface-5);
+
+        /* Container query for smaller screens */
+        @container (width < 600px) {
+            position: relative;
+        }
+
+        /* Link styles */
+        a {
+            text-decoration: none;
+        }
+    }
+}
+
+/* Components section: defines styles for specific HTML elements */
+
 @layer components {
+    /* Blockquote styles */
     @layer blockquote {
         blockquote {
+            /* Positioning, margin, padding, color, background, and border styles */
             position: relative;
             margin-block: 1rem;
             padding: 1rem;
             color: var(--surface-1);
             background: var(--surface-7);
             border-left: 5px solid var(--surface-6);
+
+            /* Before and after pseudo-elements for quotes */
             &::before,
             &::after {
                 content: '"';
                 position: absolute;
                 font-size: 1.8rem;
             }
+
             &::before {
                 top: 0;
                 left: 5px;
             }
+
             &::after {
                 bottom: -10px;
                 right: 5px;
             }
         }
     }
+
+    /* Horizontal rule (hr) styles */
     @layer hr {
         hr {
             border-bottom: 1px solid var(--dark-line);
         }
     }
+
+    /* Details element styles */
     @layer details {
         details {
+            /* Margin, padding, color, background, and border styles */
             margin-block: 1rem;
             padding: 1rem;
             color: var(--surface-1);
             background: var(--surface-7);
             border-left: 5px solid var(--surface-6);
-            summary {
-                cursor: pointer;
-            }
+
+            /* Summary element styles */
+            summary {cursor: pointer;}
         }
     }
+
+    /* Figure element styles */
     @layer figure {
         figure {
+            /* Margin, padding, color, and background styles */
             margin-block: 1rem;
             padding: 1rem;
             color: var(--surface-1);
             background: var(--surface-7);
         }
+
         figcaption {
+            /* Margin, font size, and text alignment styles */
             margin-block-start: .5rem;
             font-size: .875rem;
             text-align: center;
         }
+
         img {
-          margin: auto;
+            margin: auto;
         }
     }
+
+    /* List element styles */
     @layer list {
-        ol, ul {padding-inline-start: 2rem;}
-        li {margin-block-start: .4rem;}
-        dt {font-weight: bold;}
-        dd::before {content: '→ ';}
+        ol, ul {
+            /* Padding styles for ordered and unordered lists */
+            padding-inline-start: 2rem;
+        }
+
+        li {
+            /* Margin styles for list items */
+            margin-block-start: .4rem;
+        }
+
+        dt {
+            /* Font weight styles for definition terms */
+            font-weight: bold;
+        }
+
+        dd::before {
+            /* Content and styles for definition descriptions */
+            content: '→ ';
+        }
     }
+
+    /* Table element styles */
     @layer table {
         table {
+            /* Width, text alignment, background, border collapse, and caption styles */
             width: 100%;
             text-align: start;
             border-collapse: collapse;
@@ -229,121 +398,154 @@
                 font-weight: bold;
                 margin-bottom: .5rem;
             }
+
+            /* Alternating row colors */
             :is(tbody, table) > tr:nth-child(odd) {
                 background: var(--surface-7);
             }
+            :is(tbody, table) > tr:nth-child(even) {
+                background: var(--surface-5);
+            }
+
             td, th {
+                /* Padding, vertical alignment, color, and border styles for table cells */
                 padding: .5rem;
                 vertical-align: top;
                 color: var(--surface-1);
 
                 border: 1px solid var(--surface-6);
             }
+
             th {
+                /* Background color styles for table headers */
                 background: var(--surface-3);
+
+                /* Alternating background colors for even table headers */
                 &:nth-child(even) {
                     background: var(--surface-3);
                 }
             }
         }
     }
+
+    /* Form element styles */
     @layer form {
-        fieldset {
-            border: 1px solid var(--surface-6);
-            border-radius: 4px;
-            padding: 1rem;
+        :is(form) {
+            /* Width, fieldset, legend, label, input, textarea, select, button, and progress styles */
+            width: fit-content;
+            fieldset {
+                border: 1px solid var(--surface-6);
+                border-radius: 4px;
+                padding: 1rem;
+            }
+            legend {
+                padding-inline-end: .5rem;
+                font-weight: bold;
+            }
+            label {
+                display: block;
+                margin-block-end: .5rem;
+            }
+            input, textarea, select, button {
+                margin-block-end: .5rem;
+                padding: 6px 12px;
+                field-sizing: content;
+                font: inherit;
+                letter-spacing: inherit;
+                font-size: max(16px, 1em);
+                color: var(--surface-6);
+                background: var(--surface-7);
+                border: 1px solid var(--surface-6);
+                border-radius: 4px;
+            }
+            textarea {
+                resize: vertical;
+            }
+            select,
+            ::picker(select) {
+                appearance: base-select;
+            }
+            input[type="checkbox"], input[type="radio"] {
+                display: inline-block;
+                width: auto;
+                margin-right: .5rem;
+            }
+            input[type="submit"], input[type="reset"], input[type="button"] {
+                display: inline-block;
+                padding: 6px 12px;
+                font-size: 1rem;
+                text-align: center;
+                text-decoration: none;
+                color: var(--surface-6);
+                white-space: nowrap;
+                background: var(--surface-7);
+                border-radius: 4px;
+            }
+            input[type="file"] {display: block;}
+            input[type="range"] {width: 100%;}
+            input[type="color"] {padding: 0;}
+            a button,
+            button,
+            input[type="submit"],
+            input[type="reset"],
+            input[type="button"] {
+                display: inline-block;
+                padding: 6px 12px;
+                font-size: 1rem;
+                text-align: center;
+                text-decoration: none;
+                color: var(--surface-6);
+                white-space: nowrap;
+                background: var(--surface-7);
+                border-radius: 4px;
+                cursor: pointer;
+            }
+            a button[disabled],
+            button[disabled],
+            input[type="submit"][disabled],
+            input[type="reset"][disabled],
+            input[type="button"][disabled] {
+                opacity: .5;
+                cursor: not-allowed;
+            }
+            .button:focus,
+            .button:enabled:hover,
+            button:focus,
+            button:enabled:hover,
+            input[type="submit"]:focus,
+            input[type="submit"]:enabled:hover,
+            input[type="reset"]:focus,
+            input[type="reset"]:enabled:hover,
+            input[type="button"]:focus,
+            input[type="button"]:enabled:hover {
+                opacity: .8;
+                background: var(--surface-7);
+            }
+            input {
+                &:user-valid {
+                    border: 2px solid var(--dark-link);
+
+                }
+                &:user-valid + span::before {
+                    content: "✓";
+                    color: var(--dark-link);
+                }
+            }
+            .button:active,
+            button:active {
+                opacity: 1;
+                background: var(--surface-6);
+            }
         }
-        legend {
-            padding-inline-end: .5rem;
-            font-weight: bold;
-        }
-        label {
-            display: block;
-            margin-block-end: .5rem;
-        }
-        input, textarea, select, button {
-            margin-block-end: .5rem;
-            padding: 6px 12px;
-            field-sizing: content;
-            font: inherit;
-            letter-spacing: inherit;
-            font-size: max(16px, 1em);
-            color: var(--surface-6);
-            background: var(--surface-7);
-            border: 1px solid var(--surface-6);
-            border-radius: 4px;
-        }
-        textarea {
-            resize: vertical;
-        }
-        select,
-        ::picker(select) {
-            appearance: base-select;
-        }
-        input[type="checkbox"], input[type="radio"] {
-            display: inline-block;
-            width: auto;
-            margin-right: .5rem;
-        }
-        input[type="submit"], input[type="reset"], input[type="button"] {
-            display: inline-block;
-            padding: 6px 12px;
-            font-size: 1rem;
-            text-align: center;
-            text-decoration: none;
-            color: var(--surface-6);
-            white-space: nowrap;
-            background: var(--surface-7);
-            border-radius: 4px;
-        }
-        input[type="file"] {display: block;}
-        input[type="range"] {width: 100%;}
-        input[type="color"] {padding: 0;}
-        a button,
-        button,
-        input[type="submit"],
-        input[type="reset"],
-        input[type="button"] {
-            display: inline-block;
-            padding: 6px 12px;
-            font-size: 1rem;
-            text-align: center;
-            text-decoration: none;
-            color: var(--surface-6);
-            white-space: nowrap;
-            background: var(--surface-7);
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        a button[disabled],
-        button[disabled],
-        input[type="submit"][disabled],
-        input[type="reset"][disabled],
-        input[type="button"][disabled] {
-            opacity: .5;
-            cursor: not-allowed;
-        }
-        .button:focus,
-        .button:enabled:hover,
-        button:focus,
-        button:enabled:hover,
-        input[type="submit"]:focus,
-        input[type="submit"]:enabled:hover,
-        input[type="reset"]:focus,
-        input[type="reset"]:enabled:hover,
-        input[type="button"]:focus,
-        input[type="button"]:enabled:hover {
-            opacity: .8;
-            background: var(--surface-7);
-        }
-        .button:active,
-        button:active {
-            opacity: 1;
-            background: var(--surface-6);
-        }
+label {
+    display: block;
+}
     }
+
+    /* Code element styles */
     @layer code {
         code, samp, kbd, pre {
+            /* Padding, font size, font family, color, background, border, and border radius styles */
             padding: 3px 6px;
             font-size: 0.9em;
             font-family: var(--font-mono), monospace;
@@ -352,8 +554,12 @@
             border: 1px solid var(--dark-line);
             border-radius: 4px;
         }
-        kbd {border-bottom: 3px solid var(--surface-6);}
+        kbd {
+            /* Border bottom styles for keyboard input */
+            border-bottom: 3px solid var(--surface-6);
+        }
         pre {
+            /* Padding, max-width, overflow, white-space, and font size styles for preformatted text */
             padding: 1rem 1.4rem;
             max-width: 100%;
             overflow: auto;
@@ -376,8 +582,11 @@
             }
         }
     }
+
+    /* Progress element styles */
     @layer progress {
         progress {
+            /* Display, width, height, appearance, border, and color styles for progress bars */
             display: block;
             width: 100%;
             height: 1.5rem;
@@ -388,87 +597,27 @@
         }
     }
 }
-@layer layout {
-    main {
-        container-type: inline-size;
-        margin-inline: auto;
-        max-width: clamp(320px, 90%, 1000px);
-    }
-    nav {
-        position: sticky;
-        margin: -2rem calc(50% - 50vw) 2rem;
-        padding: 1.5rem;
-        top: 0;
-        color: var(--surface-1);
-        background-color: var(--dark-surface);
-        box-shadow: rgba(50, 50, 93, 0.25) 0 13px 27px -5px, rgba(0, 0, 0, 0.3) 0 8px 16px -8px;
-        @container (width < 600px) {
-            position: relative;
-        }
-        a {
-            margin-block-end: .5rem;
-            padding: .5rem;
-            text-decoration: none;
-            color: var(--surface-6);
-            background: var(--surface-7);
-            border-radius: 4px;
-            &:hover {
-                background: var(--dark-link);
-            }
-        }
-    }
-    header {
-        margin: -2rem calc(50% - 50vw) 2rem;
-        padding: 2rem calc(50vw - 50%);
-        border-bottom: 1px solid var(--surface-7);
-        h1 {
-            margin-bottom: 1.5rem;
-            font-size: 3rem;
-        }
-    }
-    article {
-        margin: 2rem 0;
-        background-color: var(--dark-surface);
-    }
-    aside {
-        margin: 2rem 0;
-        padding: 1rem;
-        color: var(--surface-1);
-        background: var(--surface-7);
-        border-left: 5px solid var(--surface-6);
-    }
-    section {
-        margin: 2rem 0;
-        > * {
-            text-box: trim-both cap alphabetic;
-        }
-        h2 {
-            margin-block-end: 1rem;
-        }
-    }
-    footer {
-        position: sticky;
-        padding: 2rem calc(50vw - 50%);
-        bottom: 0;
-        z-index: -100;
-        @container (width < 600px) {
-            position: relative;
-        }
-        a {
-            text-decoration: none;
-        }
-    }
-}
+
+/* Utilities section: defines miscellaneous styles and rules */
 @layer utilities {
+    /* Marker styles */
     ::marker {line-height: 0;}
+
+    /* Selection styles for highlighted text */
     ::selection {
         color: var(--surface-6);
         background: var(--surface-7);
     }
+
+    /* Mozilla-specific selection styles */
     ::-moz-selection {color: var(--surface-6);}
 }
+
+/* Demo section: defines styles for the theme switcher wrapper */
 @layer demo {
+    /* Theme switcher wrapper styles */
     .theme-switch-wrapper {
+        /* Positioning, padding, top, right, margin, color, background, border, border radius, and z-index styles */
         position: fixed;
         padding: 1rem;
         top: 20px;
@@ -479,6 +628,8 @@
         border: 1px solid var(--surface-6);
         border-radius: 4px;
         z-index: 100;
+
+        /* Container query for smaller screens */
         @container (width < 600px) {
             display: none;
         }
